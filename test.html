@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Placeholder</title>
+
+    <style>
+        button {
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            border: none;
+            background: tomato;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #post-container {
+            max-width: 1160px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            background-color: rgb(242, 242, 242);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .post-card {
+            padding: 15px;
+            border: 1px solid tomato;
+            background-color: white;
+            border-radius: 10px;
+            height: 250px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 
+        .post-card h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .post-card p {
+            font-size: 14px;
+            color: #333;
+        } */
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <button type="button" onclick="loadPost()">Load Post</button>
+    </div>
+
+    <div id="post-container"></div>
+
+    <script>
+        const loadPost = () => {
+            const url = "https://jsonplaceholder.typicode.com/posts";
+            fetch(url)
+                .then(response => response.json())
+                .then(data => displayPost(data))
+        }
+
+        const displayPost = (posts) => {
+            const postContainer = document.getElementById('post-container');
+            postContainer.innerHTML = "";
+
+            posts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.classList.add('post-card'); // এখানে ক্লাস যোগ করা হলো
+                postCard.innerHTML = `
+          <h1>${post.title}</h1>
+          <p>${post.body}</p>
+        `;
+                postContainer.appendChild(postCard);
+            })
+        }
+    </script>
+</body>
+
+</html>

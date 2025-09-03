@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos API</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .todo-card {
+            border: 1px solid tomato;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .todo-card p {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="todos-container"> </section>
+
+    <script>
+        const loadtodos = () => {
+            const url = "https://jsonplaceholder.typicode.com/todos";
+            fetch(url)
+                .then(res => res.json())
+                .then(data => displayTodos(data))
+        }
+
+        const displayTodos = (todos) => {
+            //getting html Section
+            const todosContainer = document.getElementById('todos-container');
+            todosContainer.innerHTML = '';
+
+            //create HTML element
+            todos.forEach(todo => {
+                const todoCard = document.createElement('div');
+                todoCard.innerHTML = `
+                    <div class="todo-card">
+                        <p>
+                        ${todo.completed == true
+                        ? `<i class="fa-solid fa-circle-check"></i>`
+                        : `<i class="fa-regular fa-circle-check"></i>`}
+                        </p >
+                        <h4>${todo.title}</h4>
+                    </div >
+                `;
+                todosContainer.append(todoCard)
+            });
+
+
+        }
+        // function call in section
+        loadtodos()
+    </script>
+</body>
+
+</html>
